@@ -50,7 +50,7 @@ checkdepends=(
   "${_py}-pytest"
 )
 source=(
-  "git+${url}.git#tag=${pkgver}"
+  "git+${url}.git#tag=v${pkgver}"
 )
 sha512sums=(
   'SKIP'
