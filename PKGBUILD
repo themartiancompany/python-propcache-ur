@@ -15,7 +15,7 @@ _pynextver="${_pymajver%.*}.$(( \
   ${_pyminver} + 1))"
 _pkg=propcache
 pkgname="${_py}-${_pkg}"
-pkgver=0.2
+pkgver=0.2.0
 # _commit=1e2f6f9cac5cc60f0adab051c14adf09ffe39155
 pkgrel=1
 _pkgdesc=(
