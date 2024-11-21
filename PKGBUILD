@@ -3,6 +3,7 @@
 # Maintainer: Pellegrino Prevete (tallero) <pellegrinoprevete@gmail.com>
 # Maintainer: Truocolo <truocolo@aol.com>
 
+_offline="false"
 _py="python"
 _pyver="$( \
   "${_py}" \
@@ -15,8 +16,8 @@ _pynextver="${_pymajver%.*}.$(( \
   ${_pyminver} + 1))"
 _pkg=propcache
 pkgname="${_py}-${_pkg}"
-pkgver=0.2.0
-# _commit=1e2f6f9cac5cc60f0adab051c14adf09ffe39155
+pkgver=0.2.1
+_commit="726b8989e792a463d1eed8ded51128d457736a93"
 pkgrel=1
 _pkgdesc=(
   "Fast implementation of cached"
@@ -29,7 +30,8 @@ license=(
   'Apache-2.0'
 )
 _http="https://github.com"
-_ns="aio-libs"
+# _ns="aio-libs"
+_ns="themartiancompany"
 url="${_http}/${_ns}/${_pkg}"
 depends=(
   "${_py}>=${_pymajver}"
@@ -52,8 +54,16 @@ makedepends=(
 checkdepends=(
   "${_py}-pytest"
 )
+_tag_name="commit"
+# _tag_name="tag"
+_tag="${_commit}"
+# _tag="v${pkgver}"
+_src="git+${url}.git#${_tag_name}=${_tag}"
+if [[ "${_offline}" == true ]]; then
+  _src="git+file://${HOME}/${_pkg}#${_tag_name}=${_tag}"
+fi
 source=(
-  "git+${url}.git#tag=v${pkgver}"
+  "${_src}"
 )
 sha512sums=(
   'SKIP'
@@ -62,6 +72,13 @@ sha512sums=(
 build() {
   cd \
     "${_pkg}"
+  # export \
+  #   PYTHONPATH="$(pwd)/packaging:$(pwd)/packaging/pep517_backend:${PYTHONPATH}"
+  # cp \
+  #   -r \
+  #   'packaging/pep517_backend/'* \
+  #   "packaging"
+  # PYTHONPATH="$(pwd)/packaging:${PYTHONPATH}" \
   "${_py}" \
     -m \
       build \
